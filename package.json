@@ -1,0 +1,27 @@
+{
+  "name": "t_nodejs",
+  "version": "1.0.0",
+  "description": "wetube",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AsanHO/T_nodejs.git"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AsanHO/T_nodejs/issues"
+  },
+  "homepage": "https://github.com/AsanHO/T_nodejs#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "nodemon": "^2.0.15"
+  }
+}
