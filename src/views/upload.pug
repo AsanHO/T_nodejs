@@ -1,7 +1,8 @@
 extends base.pug
 
-
 block content
     form(method="POST")
-        input(name ="title",placeholder="Video Title", required)
+        input(name ="title",placeholder="Title", type="text", required, maxlength = 80)
+        input(name ="description",placeholder="description", type="text", required, minlength = 20)
+        input(name ="hashtags",placeholder="hashtags, seperated by comma", type="text")
         input(value="Save", type="submit")
