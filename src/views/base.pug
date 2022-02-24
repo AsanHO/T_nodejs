@@ -3,21 +3,30 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title #{pageTitle} | Hotube
+        title #{pageTitle} | #{siteName}
         link(rel="stylesheet" href="https://unpkg.com/mvp.css")
     body
         header 
             h1=pageTitle
             nav 
                 ul 
+                    if loggedIn 
+                        li 
+                            a(href="/logout") logout  
+                        li 
+                            a(href="/profile") #{loggedInUser.name}'s profile  
+                    else
+                        li
+                            a(href="/join") join     
+                        li
+                            a(href="/login") login   
                     li 
                         a(href="/videos/upload") Update Video  
                     li
                         a(href="/") Home
                     li
                         a(href="/search") search 
-                    li
-                        a(href="/join") join     
+                    
         main
             block content
     include partials/footer.pug 
