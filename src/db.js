@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 mongoose.connect(
-  "mongodb://127.0.0.1:27017/t_nodejs"
+  process.env.DB_URL
   //뒤에 데이터베이스이름으로 사용할 t_nodejs로 해줘야함. 딴걸로 해도 상관없음
 );
 
