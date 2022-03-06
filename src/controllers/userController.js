@@ -48,7 +48,7 @@ export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "login";
   // 사용자가 입력한 username이 DB에도 있는지 확인
-  const user = await User.findOne({ username: username }); //=username하나만 써도 유효
+  const user = await User.findOne({ username: username, socialOnly: false }); //=username하나만 써도 유효
   if (!user) {
     return res.status(400).render("login", {
       pageTitle,
@@ -121,15 +121,10 @@ export const finishGithubLogin = async (req, res) => {
     if (!emailObj) {
       return res.redirect("/login");
     }
-    const existingUser = await User.findOne({ email: emailObj.email });
-    if (existingUser) {
-      //이메일이 동일하거나 이미 github로 로그인했던 경우
-      req.session.loggedIn = true;
-      req.session.user = existingUser;
-      return res.redirect("/");
-    } else {
-      //동일하지 않다면
-      const user = await User.create({
+    let user = await User.findOne({ email: emailObj.email });
+    if (!user) {
+      user = await User.create({
+        avatarUrl: userData.avatar_url,
         name: userData.name,
         username: userData.login,
         email: emailObj.email,
@@ -137,10 +132,12 @@ export const finishGithubLogin = async (req, res) => {
         socialOnly: true,
         location: userData.location,
       });
-      req.session.loggedIn = true;
-      req.session.user = user;
-      return res.redirect("/");
+      //이메일이 동일하거나 이미 github로 로그인했던 경우
     }
+    //동일하지 않다면
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
   } else {
     return res.redirect("/login");
   }
