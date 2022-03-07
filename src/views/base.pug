@@ -10,18 +10,20 @@ html(lang="en")
             h1=pageTitle
             nav 
                 ul 
-                    if loggedIn 
+                    if loggedIn
+                        li 
+                            a(href="/users/edit") Edit Profile 
                         li 
                             a(href="/users/logout") logout  
                         li 
-                            a(href="/profile") #{loggedInUser.name}'s profile  
+                            a(href="/profile") #{loggedInUser.name}'s profile 
+                        li 
+                            a(href="/videos/upload") Update Video   
                     else
                         li
                             a(href="/join") join     
                         li
                             a(href="/login") login   
-                    li 
-                        a(href="/videos/upload") Update Video  
                     li
                         a(href="/") Home
                     li
