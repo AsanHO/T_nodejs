@@ -153,14 +153,24 @@ export const getEdit = (req, res) =>
 export const postEdit = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
     body: { name, email, username, location },
+    file,
   } = req;
-  console.log("🔍");
-  // const id = req.session.user.id;
-  // const { name, email, username, location } = req.body;
+  const exsitsUsername = await User.findOne({ username });
+  const exsitsEmail = await User.findOne({ email });
+  if (
+    (exsitsUsername && exsitsUsername._id != _id) ||
+    (exsitsEmail && exsitsEmail._id != _id)
+  ) {
+    return res.status(400).render("editProfile", {
+      pageTitle: "Edit Profile",
+      errorMessage: `This username/email is already taken.`,
+    });
+  }
   const updatedUser = await User.findByIdAndUpdate(
+    //이 코드가 실행되기 이전에, 1.자신의 정보와 중복되는지 검사, 2. DB의 정보와 중복되는지 검사
     _id,
     {
       name,
