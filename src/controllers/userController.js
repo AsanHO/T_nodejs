@@ -184,6 +184,7 @@ export const postEdit = async (req, res) => {
     //이 코드가 실행되기 이전에, 1.자신의 정보와 중복되는지 검사, 2. DB의 정보와 중복되는지 검사
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       name,
       email,
       username,
