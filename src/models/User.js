@@ -9,13 +9,14 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   name: { type: String, required: true },
   location: String,
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
 });
 
 //hashing
 userSchema.pre("save", async function () {
-  console.log("plain:", this.password);
-  this.password = await bcrypt.hash(this.password, 5);
-  console.log("hashed:", this.password);
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 5);
+  }
 });
 
 //모델 선언

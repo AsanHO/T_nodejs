@@ -1,6 +1,7 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
+import Video from "../models/Video";
 //to rootRouter
 export const getJoin = (req, res) => res.render("join", { pageTitle: "join" });
 export const postJoin = async (req, res) => {
@@ -145,7 +146,7 @@ export const finishGithubLogin = async (req, res) => {
 //to userRouter
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("videos");
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
