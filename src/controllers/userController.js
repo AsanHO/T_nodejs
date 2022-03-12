@@ -148,6 +148,7 @@ export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
+
 export const getEdit = (req, res) =>
   res.render("edit-profile", { pageTitle: "Edit Profile" });
 export const postEdit = async (req, res) => {
@@ -192,4 +193,46 @@ export const postEdit = async (req, res) => {
   ); //가장 최근에 변경된 object를 리턴하게해주는 mongoose code
   req.session.user = updatedUser;
   return res.redirect("/users/edit");
+};
+
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.status(400).render("edit-Profile", {
+      pageTitle: "Edit Profile",
+      errorMessage: `소셜로그인유저는 비밀번호변경이 불가능합니다.`,
+    });
+  }
+  res.render("users/change-password", { pageTitle: "Change Profile" });
+};
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { oldPW, newPW, newPWConfirm },
+  } = req;
+  const user = await User.findById(_id);
+  const ok = await bcrypt.compare(oldPW, user.password);
+  if (!ok) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The current password is incorrect",
+    });
+  }
+  if (oldPW === newPW) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The old password equals new password",
+    });
+  }
+  if (newPW !== newPWConfirm) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The password does not match the confirmation",
+    });
+  }
+  user.password = newPW;
+  await user.save();
+  req.session.destroy();
+  return res.redirect("/login");
 };
