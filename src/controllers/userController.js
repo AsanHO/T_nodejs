@@ -161,7 +161,8 @@ export const postEdit = async (req, res) => {
   } = req;
   if (
     email === req.session.user.email &&
-    username === req.session.user.username
+    username === req.session.user.username &&
+    file === undefined
   ) {
     return res.status(400).render("edit-Profile", {
       pageTitle: "Edit Profile",
@@ -184,7 +185,7 @@ export const postEdit = async (req, res) => {
     //이 코드가 실행되기 이전에, 1.자신의 정보와 중복되는지 검사, 2. DB의 정보와 중복되는지 검사
     _id,
     {
-      avatarUrl: file ? file.path : avatarUrl,
+      avatarUrl: file.path,
       name,
       email,
       username,
