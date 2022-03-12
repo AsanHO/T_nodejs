@@ -4,6 +4,7 @@ export const formatHashtags = (hashtags) =>
   hashtags.split(",").map((word) => (word.startsWith("#") ? word : `#${word}`));
 //모델의 형태를 정의해줘야함 : 스키마
 const videoSchema = new mongoose.Schema({
+  fileUrl: { type: String, required: true },
   title: { type: String, required: true, trim: true, maxlength: 80 },
   description: { type: String, required: true, trim: true, minlength: 20 },
   createdAt: { type: Date, default: Date.now },

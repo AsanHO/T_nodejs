@@ -8,7 +8,7 @@ import {
   postUpload,
   deleteVideo,
 } from "../controllers/videoController";
-import { protectorMiddleware } from "../middlewares";
+import { protectorMiddleware, videoUpload } from "../middlewares";
 
 const videoRouter = express.Router();
 
@@ -26,7 +26,7 @@ videoRouter
   .route("/upload")
   .all(protectorMiddleware)
   .get(getUpload)
-  .post(postUpload);
+  .post(videoUpload.single("video"), postUpload);
 //videoRouter.get("/:id(\\d+)/edit", getEdit); 위의 코드와 동일 route를 이용
 //videoRouter.post("/:id(\\d+)/edit", postEdit); 하나의 URL에 get,post 둘다 이용할때 유용
 
