@@ -2,8 +2,8 @@ extends base.pug
 include mixins/video
 
 block content
-    h1 welcome to home. here are so many popular video
-    each video in videos 
-        +video(video)
-    else
-        li Not Found
+    div.video-grid
+        each video in videos 
+            +video(video)
+        else
+            li Not Found

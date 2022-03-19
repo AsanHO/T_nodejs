@@ -1,12 +1,10 @@
-extends base.pug
-
+extends base
 
 block content
     video(src="/" + video.fileUrl, controls)
-    div 
+    div
         p=video.description
         small=video.createdAt
-    h3 #{video.views} #{video.views == 1 ? "view" : "views"} 
     div
         small Uploaded by 
             a(href=`/users/${video.owner._id}`)=video.owner.name

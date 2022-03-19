@@ -1,7 +1,7 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
-import Video from "../models/Video";
+import { model } from "mongoose";
 //to rootRouter
 export const getJoin = (req, res) => res.render("join", { pageTitle: "join" });
 export const postJoin = async (req, res) => {
@@ -146,7 +146,13 @@ export const finishGithubLogin = async (req, res) => {
 //to userRouter
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id).populate("videos");
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {
+      path: "owner",
+      model: "User",
+    },
+  }); //double populate: 객체를 호출하는법(유저에서 비디오를 호출하고 호출한 비디오에서 또다시 유저를 호출)
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }

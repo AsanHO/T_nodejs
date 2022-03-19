@@ -4,9 +4,9 @@ block content
     h4 Update Profile 
     if errorMessage 
         span=errorMessage
-    if loggedInUser.avatarUrl.startsWith("upload")
+    if !loggedInUser.socialOnly
         img(src="/" + loggedInUser.avatarUrl,height="100",width="100")
-    if loggedInUser.avatarUrl.startsWith("http")
+    else 
         img(src=loggedInUser.avatarUrl,height="100",width="100")
     form(method="POST", enctype="multipart/form-data")
         label(for="avatar") Avatar 
@@ -19,7 +19,8 @@ block content
         input(type="submit", value="Update Profile")
         hr
         if !loggedInUser.socialOnly
-            a(href="change-password") change password →
+            div.edit-profile__password
+                a(href="change-password") Change Password &rarr; 
 
 
 
