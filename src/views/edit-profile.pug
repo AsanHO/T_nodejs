@@ -1,14 +1,9 @@
 extends base
 
 block content
-    h4 Update Profile 
     if errorMessage 
         span=errorMessage
-    if !loggedInUser.socialOnly
-        img(src="/" + loggedInUser.avatarUrl,height="100",width="100")
-    else 
-        img(src=loggedInUser.avatarUrl,height="100",width="100")
-    form(method="POST", enctype="multipart/form-data")
+    form(method="POST", enctype="multipart/form-data").edit-profile__form
         label(for="avatar") Avatar 
         input(type="file", id="avatar", name="avatar", accept="image/*")
         input(name="name", type="text", placeholder="name",value=loggedInUser.name)

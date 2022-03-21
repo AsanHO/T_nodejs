@@ -9,13 +9,19 @@ header
                     i.fas.fa-search
             if loggedIn
                 li 
+                    a(href="/videos/upload") Update Video   
+                li 
                     a(href="/users/edit") Edit Profile 
                 li 
                     a(href="/users/logout") Logout
-                li 
-                    a(href=`/users/${loggedInUser._id}`) #{loggedInUser.name}'s profile 
-                li 
-                    a(href="/videos/upload") Update Video   
+                li
+                    a(href=`/users/${loggedInUser._id}`)
+                        if loggedInUser.avatarUrl === ""
+                            span 😀
+                        if !loggedInUser.socialOnly
+                            img.header__avatar(src="/" + loggedInUser.avatarUrl)
+                        else 
+                            img.header__avatar(src=loggedInUser.avatarUrl)
             else
                 li
                     a(href="/login") login   
