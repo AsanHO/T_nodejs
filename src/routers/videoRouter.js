@@ -26,7 +26,7 @@ videoRouter
   .route("/upload")
   .all(protectorMiddleware)
   .get(getUpload)
-  .post(videoUpload.single("video"), postUpload);
+  .post(videoUpload.fields([{ name: "video" }, { name: "thumb" }]), postUpload);
 //videoRouter.get("/:id(\\d+)/edit", getEdit); 위의 코드와 동일 route를 이용
 //videoRouter.post("/:id(\\d+)/edit", postEdit); 하나의 URL에 get,post 둘다 이용할때 유용
 
