@@ -162,6 +162,7 @@ export const see = async (req, res) => {
 };
 export const logout = (req, res) => {
   req.session.destroy();
+  req.flash("info", "Bye Bye");
   return res.redirect("/");
 };
 
@@ -215,6 +216,7 @@ export const postEdit = async (req, res) => {
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "Can't change password.");
     return res.status(400).render("edit-Profile", {
       pageTitle: "Edit Profile",
       errorMessage: `소셜로그인유저는 비밀번호변경이 불가능합니다.`,
@@ -251,6 +253,7 @@ export const postChangePassword = async (req, res) => {
   }
   user.password = newPW;
   await user.save();
+  req.flash("info", "Password updated");
   req.session.destroy();
   return res.redirect("/login");
 };

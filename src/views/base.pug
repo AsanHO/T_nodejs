@@ -1,3 +1,4 @@
+include mixins/message
 html(lang="en")
     head
         meta(charset="UTF-8")
@@ -6,6 +7,12 @@ html(lang="en")
         title #{pageTitle} | #{siteName}
         link(rel="stylesheet", href="/static/css/styles.css")
     body
+        if messages.error
+            +message("error", messages.error)
+        if messages.info
+            +message("info", messages.info)
+        if messages.success
+            +message("sucess", messages.success)
         include partials/header
         main
             block content
