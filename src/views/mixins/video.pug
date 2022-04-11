@@ -1,8 +1,13 @@
 mixin video(video)
     a(href=`/videos/${video.id}`).video-mixin
-        div.video-mixin__thumb(style=`background-image:url(${video.thumbUrl});background-size:cover;background-position:center;`, crossorigin="crossorigin")
+        div.video-mixin__thumb(style=`background-size:cover;background-position:center;`)
+            if isHeroku 
+                img(src=video.thumbUrl, alt="thumbnail", crossorigin="crossorigin").video-mixin__thumb
+            else
+                img(src="/"+video.thumbUrl, alt="thumbnail").video-mixin__thumb
         div.video-mixin__data
             span.video-mixin__title=video.title
             div.video-mixin__meta
                 span #{video.owner.name} • 
-                span #{video.meta.views} 회
+                span #{video.meta.views} 회 
+                span #{video.comments.length} 댓글
