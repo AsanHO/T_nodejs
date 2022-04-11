@@ -33,11 +33,6 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
-app.use((req, res, next) => {
-  req.sessionStore.all((error, sessions) => {
-    next();
-  });
-});
 app.use(flash());
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
