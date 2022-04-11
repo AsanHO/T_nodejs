@@ -176,6 +176,7 @@ export const postEdit = async (req, res) => {
     body: { name, email, username, location },
     file,
   } = req;
+  console.log(file);
   if (
     email === req.session.user.email &&
     username === req.session.user.username &&
@@ -202,7 +203,7 @@ export const postEdit = async (req, res) => {
     //이 코드가 실행되기 이전에, 1.자신의 정보와 중복되는지 검사, 2. DB의 정보와 중복되는지 검사
     _id,
     {
-      avatarUrl: file.path,
+      avatarUrl: file ? file.location : avatarUrl,
       name,
       email,
       username,
